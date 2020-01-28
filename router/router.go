@@ -17,6 +17,7 @@ var routes []description
 func init() {
 	routes = append(routes, applicationRoutes...)
 	routes = append(routes, loginRoutes...)
+	routes = append(routes, proxyRoutes...)
 }
 
 func RegisterRouter(engine *gin.Engine) {
@@ -30,6 +31,10 @@ func RegisterRouter(engine *gin.Engine) {
 	}
 	// api 接口
 	for _, route := range routes {
-		engine.Handle(route.method, route.path, route.handlers...)
+		if route.method == "ANY" {
+			engine.Any(route.path, route.handlers...)
+		} else {
+			engine.Handle(route.method, route.path, route.handlers...)
+		}
 	}
 }

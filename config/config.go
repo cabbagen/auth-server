@@ -10,3 +10,7 @@ var DatabaseConfig map[string]string = map[string]string {
 	"username": "root",
 	"password": "artART5201314??",
 }
+
+var HttpProxyConfig map[string]string = map[string]string {
+	"http": "http://localhost:7001",
+}

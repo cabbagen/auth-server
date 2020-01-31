@@ -2,8 +2,9 @@ package controller
 
 import (
 	"auth-go/provider"
+	"bytes"
+	"encoding/json"
 	"errors"
-	"fmt"
 	"github.com/gin-gonic/gin"
 )
 
@@ -22,10 +23,19 @@ func (lc LoginController) HandleGenerateCaptcha(c *gin.Context) {
 }
 
 type LoginParams struct {
-	Username        string    `json:"username"`
-	Password        string    `json:"password"`
-	CaptchaId       string    `json:"captchaId"`
-	Answer          string    `json:"answer"`
+	Username        string          `json:"username"`
+	Password        string          `json:"password"`
+	CaptchaId       string          `json:"captchaId"`
+	Answer          string          `json:"answer"`
+}
+type ProxyLoginRequest struct {
+	Username        string          `json:"username"`
+	Password        string          `json:"password"`
+}
+type ProxyLoginResponse struct {
+	Status          int             `json:"status"`
+	Data            string          `json:"data"`
+	Msg             string          `json:"msg"`
 }
 func (lc LoginController) HandleLogin(c *gin.Context) {
 	var params LoginParams
@@ -35,19 +45,45 @@ func (lc LoginController) HandleLogin(c *gin.Context) {
 		return
 	}
 
+	// 验证码校验
 	if isOk := provider.ValidateCaptcha(params.CaptchaId, params.Answer); !isOk {
 		lc.HandleFailResponse(c, errors.New("验证码不正确"))
 		return
 	}
 
-	tokenString, error := provider.SignToken(fmt.Sprintf("%s-%s", params.Username, params.Password))
+	// 项目登录接口，校验用户身份
+	var proxyLoginRequestParams ProxyLoginRequest = ProxyLoginRequest{params.Username, params.Password }
+
+	proxyLoginParamsBytes, _ := json.Marshal(proxyLoginRequestParams)
+
+	content, error := provider.NewHttpProxy("POST", "/handle/login", bytes.NewBuffer(proxyLoginParamsBytes)).Request()
 
 	if error != nil {
 		lc.HandleFailResponse(c, error)
 		return
 	}
 
-	lc.HandleSuccessResponse(c, gin.H { "token": tokenString })
+	var proxyLoginResponse ProxyLoginResponse
+
+	if error := json.Unmarshal(content, &proxyLoginResponse); error != nil {
+		lc.HandleFailResponse(c, error)
+		return
+	}
+
+	if proxyLoginResponse.Status != 200 {
+		lc.HandleFailResponse(c, errors.New("remote server handle/login error"))
+		return
+	}
+
+	// 签发用户 token
+	tokenString, error := provider.SignToken(proxyLoginResponse.Data)
+
+	if error != nil {
+		lc.HandleFailResponse(c, error)
+		return
+	}
+
+	lc.HandleSuccessResponse(c, gin.H { "token": tokenString, "rawResponse":  proxyLoginResponse.Data })
 }
 
 type ParseTokenStringParams struct {

@@ -1,6 +1,10 @@
 package cache
 
-import "github.com/go-redis/redis/v7"
+import (
+	"strconv"
+	"auth-go/config"
+	"github.com/go-redis/redis/v7"
+)
 
 type RedisCache struct {
 	Type         string
@@ -24,11 +28,10 @@ func GetRedisCacheInstance() *RedisCache {
 }
 
 func (rc *RedisCache) Connect() {
-	rc.Client = redis.NewClient(&redis.Options {
-		Addr: "localhost:6379",
-		Password: "",
-		DB: 0,
-	})
+	db, _ := strconv.Atoi(config.CacheConfig["db"])
+	addr, password := config.CacheConfig["addr"], config.CacheConfig["password"]
+
+	rc.Client = redis.NewClient(&redis.Options { Addr: addr, Password: password, DB: db })
 }
 
 func (rc *RedisCache) Destroy() {

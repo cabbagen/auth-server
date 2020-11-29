@@ -1,13 +1,14 @@
 package middleware
 
 import (
-	"github.com/gin-gonic/gin"
 	"net/http"
+	"github.com/gin-gonic/gin"
 )
 
 var defaultCorsOptions map[string]string = map[string]string {
 	"Access-Control-Allow-Origin": "*",
 	"Access-Control-Allow-Headers": "content-type, token, app_key",
+	"Access-Control-Allow-Methods": "GET, POST, DELETE, PUT, OPTIONS",
 }
 
 func HandleCorsMiddleware(c *gin.Context) {
@@ -20,6 +21,5 @@ func HandleCorsMiddleware(c *gin.Context) {
 		c.AbortWithStatus(http.StatusOK)
 		return
 	}
-
 	c.Next()
 }

@@ -1,10 +1,10 @@
 package controller
 
 import (
-	"auth-go/provider"
 	"bytes"
-	"encoding/json"
 	"errors"
+	"encoding/json"
+	"auth-go/provider"
 	"github.com/gin-gonic/gin"
 )
 
@@ -28,10 +28,12 @@ type LoginParams struct {
 	CaptchaId       string          `json:"captchaId"`
 	Answer          string          `json:"answer"`
 }
+
 type ProxyLoginRequest struct {
 	Username        string          `json:"username"`
 	Password        string          `json:"password"`
 }
+
 type ProxyLoginResponse struct {
 	Status          int             `json:"status"`
 	Data            string          `json:"data"`
@@ -82,7 +84,6 @@ func (lc LoginController) HandleLogin(c *gin.Context) {
 		lc.HandleFailResponse(c, error)
 		return
 	}
-
 	lc.HandleSuccessResponse(c, gin.H { "token": tokenString, "rawResponse":  proxyLoginResponse.Data })
 }
 

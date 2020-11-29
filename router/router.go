@@ -15,9 +15,9 @@ type description struct {
 var routes []description
 
 func init() {
-	routes = append(routes, applicationRoutes...)
 	routes = append(routes, loginRoutes...)
 	routes = append(routes, proxyRoutes...)
+	routes = append(routes, applicationRoutes...)
 }
 
 func RegisterRouter(engine *gin.Engine) {

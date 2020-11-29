@@ -5,6 +5,12 @@ var ApplicationConfig map[string]string = map[string]string {
 	//"templateDir": "./views",
 }
 
+var CacheConfig map[string]string = map[string]string {
+	"addr": "localhost:6379",
+	"password": "",
+	"db": "0",
+}
+
 var DatabaseConfig map[string]string = map[string]string {
 	"dbname": "cb_auth_server",
 	"username": "root",

@@ -1,10 +1,10 @@
 package provider
 
 import (
-	"auth-go/config"
 	"io"
-	"io/ioutil"
 	"net/http"
+	"io/ioutil"
+	"auth-go/config"
 )
 
 type HttpProxy struct {

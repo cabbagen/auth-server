@@ -1,8 +1,8 @@
 package router
 
 import (
-	"auth-go/config"
 	"fmt"
+	"auth-go/config"
 	"github.com/gin-gonic/gin"
 )
 

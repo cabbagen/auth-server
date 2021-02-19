@@ -1,8 +1,8 @@
 package model
 
 import (
-	"auth-go/database"
 	"auth-go/schema"
+	"auth-go/database"
 	"github.com/jinzhu/gorm"
 )
 

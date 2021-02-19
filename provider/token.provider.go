@@ -39,6 +39,5 @@ func ParseTokenString(tokenString string) (string, error) {
 	if authCustomClaims, ok := token.Claims.(*AuthCustomClaims); ok && token.Valid {
 		return authCustomClaims.Response, nil
 	}
-
 	return "", error
 }

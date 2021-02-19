@@ -1,10 +1,10 @@
 package controller
 
 import (
+	"strconv"
 	"auth-go/model"
 	"auth-go/schema"
 	"github.com/gin-gonic/gin"
-	"strconv"
 )
 
 type ApplicationController struct {

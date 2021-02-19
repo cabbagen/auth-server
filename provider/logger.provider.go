@@ -1,8 +1,8 @@
 package provider
 
 import (
-	logger "github.com/sirupsen/logrus"
 	"os"
+	logger "github.com/sirupsen/logrus"
 )
 
 func init() {
@@ -19,7 +19,6 @@ func MakeupCommonLogger(fields map[string]string) *logger.Entry {
 	for key, value := range fields {
 		loggerFields[key] = value
 	}
-
 	return logger.WithFields(loggerFields)
 }
 
@@ -31,6 +30,5 @@ func MakeupApplicationLogger(fields map[string]string) *logger.Entry {
 	for key, value := range fields {
 		loggerFields[key] = value
 	}
-
 	return logger.WithFields(loggerFields)
 }

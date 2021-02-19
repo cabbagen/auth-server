@@ -9,22 +9,22 @@ var loginController controller.LoginController
 
 var loginRoutes []description = []description {
 	description {
-		path: "/auth/captcha",
+		path: "/unAuth/captcha",
 		method: "GET",
 		handlers: []gin.HandlerFunc { loginController.HandleGenerateCaptcha },
 	},
 	description {
-		path: "/auth/login",
+		path: "/unAuth/login",
 		method: "POST",
 		handlers: []gin.HandlerFunc { loginController.HandleLogin },
 	},
 	description {
-		path: "/auth/parseToken",
+		path: "/unAuth/parseToken",
 		method: "POST",
 		handlers: []gin.HandlerFunc { loginController.HandleParseTokenString },
 	},
 	description {
-		path: "/auth/signToken",
+		path: "/unAuth/signToken",
 		method: "GET",
 		handlers: []gin.HandlerFunc { loginController.HandleSignTokenString },
 	},

@@ -1,9 +1,9 @@
 package controller
 
 import (
+	"strings"
 	"auth-go/provider"
 	"github.com/gin-gonic/gin"
-	"strings"
 )
 
 type ProxyController struct {

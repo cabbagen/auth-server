@@ -4,6 +4,7 @@ import (
 	"strconv"
 	"auth-go/config"
 	"github.com/go-redis/redis/v7"
+	"time"
 )
 
 type RedisCache struct {
@@ -66,3 +67,26 @@ func (rc *RedisCache) PushSet(key string, values ...string) (int64, error) {
 	return rc.Client.SAdd(key, values).Result()
 }
 
+func (rc *RedisCache) HSet(key string, field string, values ...interface{}) (bool, error) {
+	return rc.Client.HSet(key, field, values).Result()
+}
+
+func (rc *RedisCache) HGet(key string, field string) (string, error) {
+	return rc.Client.HGet(key, field).Result()
+}
+
+func (rc *RedisCache) HDel(key string, fields ...string) (int64, error) {
+	return rc.Client.HDel(key, fields...).Result()
+}
+
+func (rc *RedisCache) Set(key string, value interface{}, expiration time.Duration) (string, error) {
+	return rc.Client.Set(key, value, expiration).Result()
+}
+
+func (rc *RedisCache) Get(key string) (string, error) {
+	return rc.Client.Get(key).Result()
+}
+
+func (rc *RedisCache) Del(keys ...string) (int64, error) {
+	return rc.Client.Del(keys...).Result()
+}

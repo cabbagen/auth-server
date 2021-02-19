@@ -1,12 +1,12 @@
 package middleware
 
 import (
-	"auth-go/cache"
-	"encoding/json"
-	"github.com/gin-gonic/gin"
-	"io/ioutil"
-	"net/http"
 	"time"
+	"net/http"
+	"io/ioutil"
+	"encoding/json"
+	"auth-go/cache"
+	"github.com/gin-gonic/gin"
 )
 
 var loggerKey string = "logger_key"
@@ -29,7 +29,6 @@ func logFormatter(params gin.LogFormatterParams) string {
 		params.Request.Header,
 		params.Method,
 	})
-
 	return string(message)
 }
 

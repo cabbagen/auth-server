@@ -1,11 +1,11 @@
 package database
 
 import (
-	"auth-go/config"
 	"fmt"
+	"log"
+	"auth-go/config"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
-	"log"
 )
 
 var databaseHandler *gorm.DB

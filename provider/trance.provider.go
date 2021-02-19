@@ -1,8 +1,8 @@
 package provider
 
 import (
-	"math/rand"
 	"time"
+	"math/rand"
 )
 
 const length = 12
@@ -18,6 +18,5 @@ func NewTranceId() string {
 	for i := range tranceId {
 		tranceId[i] = letters[rand.Int63() % int64(len(letters))]
 	}
-
 	return string(tranceId)
 }

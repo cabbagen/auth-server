@@ -41,8 +41,13 @@ type ProxyLoginResponse struct {
 }
 func (lc LoginController) HandleLogin(c *gin.Context) {
 	var params LoginParams
+	var headers provider.ProxyHeader
 
 	if error := c.BindJSON(&params); error != nil {
+		lc.HandleFailResponse(c, error)
+		return
+	}
+	if error := c.BindHeader(&headers); error != nil {
 		lc.HandleFailResponse(c, error)
 		return
 	}
@@ -58,7 +63,7 @@ func (lc LoginController) HandleLogin(c *gin.Context) {
 
 	proxyLoginParamsBytes, _ := json.Marshal(proxyLoginRequestParams)
 
-	content, error := provider.NewHttpProxy("POST", "/handle/login", bytes.NewBuffer(proxyLoginParamsBytes)).Request()
+	content, error := provider.NewHttpProxy("POST", "/handle/login", bytes.NewBuffer(proxyLoginParamsBytes)).Request(headers)
 
 	if error != nil {
 		lc.HandleFailResponse(c, error)

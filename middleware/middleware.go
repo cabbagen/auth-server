@@ -8,7 +8,7 @@ var globalMiddleware []gin.HandlerFunc = []gin.HandlerFunc {
 	HandleTokenMiddleware,
 	HandleAppKeyMiddleware,
 	HandleTranceMiddleware,
-	HandleLoggerMiddleware(),
+	//HandleLoggerMiddleware(),
 }
 
 func RegisterMiddleware(app *gin.Engine) {

@@ -9,7 +9,7 @@ import (
 )
 
 func HandleAppKeyMiddleware(c *gin.Context) {
-	if c.GetHeader("app_key") == "" {
+	if c.GetHeader("app") == "" {
 		c.AbortWithStatusJSON(http.StatusOK, gin.H { "status": 500, "msg": "auth-server error: app_key isn't exist", "data": nil })
 		return
 	}
@@ -35,7 +35,7 @@ func HandleAppKeyMiddleware(c *gin.Context) {
 	}
 
 	targetAppKey := utils.SliceFind(utils.StringSliceToInterfaces(appKeys), func(item interface{}, index int) bool {
-		return item != nil && item.(string) == c.GetHeader("app_key")
+		return item != nil && item.(string) == c.GetHeader("app")
 	})
 
 	if targetAppKey == nil {

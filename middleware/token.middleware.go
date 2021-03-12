@@ -9,7 +9,7 @@ import (
 
 func HandleTokenMiddleware(c *gin.Context) {
 	// unAuth 接口不做 token 校验
-	if regexp.MustCompile(`^/unAuth/`).FindString(c.Request.URL.Path) != "" {
+	if regexp.MustCompile(`/unAuth/`).FindString(c.Request.URL.Path) != "" {
 		c.Next()
 		return
 	}

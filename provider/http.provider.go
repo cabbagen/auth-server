@@ -32,9 +32,13 @@ func (hp HttpProxy) Request(headers ProxyHeader) ([]byte, error) {
 		return nil, error
 	}
 
+	request.Close = true
+
 	request.Header.Set("content-type", headers.ContentType)
 
 	response, error := GetDefaultHttpClient().Do(request)
+
+	// defer response.Body.Close()
 
 	if error != nil {
 		return nil, error

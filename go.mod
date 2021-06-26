@@ -1,4 +1,4 @@
-module auth-go
+module go-gateway
 
 go 1.13
 

@@ -1,10 +1,10 @@
 package cache
 
 import (
-	"strconv"
-	"auth-go/config"
-	"github.com/go-redis/redis/v7"
 	"time"
+	"strconv"
+	"go-gateway/config"
+	"github.com/go-redis/redis/v7"
 )
 
 type RedisCache struct {

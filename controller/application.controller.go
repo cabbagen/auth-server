@@ -2,8 +2,8 @@ package controller
 
 import (
 	"strconv"
-	"auth-go/model"
-	"auth-go/schema"
+	"go-gateway/model"
+	"go-gateway/schema"
 	"github.com/gin-gonic/gin"
 )
 

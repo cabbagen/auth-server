@@ -2,7 +2,7 @@ package controller
 
 import (
 	"strings"
-	"auth-go/provider"
+	"go-gateway/provider"
 	"github.com/gin-gonic/gin"
 )
 
@@ -12,6 +12,7 @@ type ProxyController struct {
 
 func (pc ProxyController) HandleProxyRequest(c *gin.Context) {
 	var headers provider.ProxyHeader
+	var proxyHeaders map[string]string = make(map[string]string)
 	var requestUrl string = strings.Replace(c.Request.URL.String(), "/proxy", "", 1)
 
 	if error := c.BindHeader(&headers); error != nil {
@@ -19,7 +20,11 @@ func (pc ProxyController) HandleProxyRequest(c *gin.Context) {
 		return
 	}
 
-	content, error := provider.NewHttpProxy(c.Request.Method, requestUrl, c.Request.Body).Request(headers)
+	if value, isExist := c.Get("parsed-token"); isExist {
+		proxyHeaders["parsed-token"] = value.(string)
+	}
+
+	content, error := provider.NewHttpProxy(c.Request.Method, requestUrl, c.Request.Body, proxyHeaders).Request(headers)
 
 	if error != nil {
 		pc.HandleFailResponse(c, error)

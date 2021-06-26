@@ -3,7 +3,7 @@ package database
 import (
 	"fmt"
 	"log"
-	"auth-go/config"
+	"go-gateway/config"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
@@ -34,4 +34,3 @@ func GetDatabaseHandleInstance() *gorm.DB {
 	}
 	return databaseHandler
 }
-

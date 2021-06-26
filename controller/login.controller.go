@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"errors"
 	"encoding/json"
-	"auth-go/provider"
+	"go-gateway/provider"
 	"github.com/gin-gonic/gin"
 )
 
@@ -59,11 +59,16 @@ func (lc LoginController) HandleLogin(c *gin.Context) {
 	}
 
 	// 项目登录接口，校验用户身份
+	var proxyHeaders map[string]string = make(map[string]string)
 	var proxyLoginRequestParams ProxyLoginRequest = ProxyLoginRequest{params.Username, params.Password }
 
 	proxyLoginParamsBytes, _ := json.Marshal(proxyLoginRequestParams)
 
-	content, error := provider.NewHttpProxy("POST", "/handle/login", bytes.NewBuffer(proxyLoginParamsBytes)).Request(headers)
+	if value, isExist := c.Get("parsed-token"); isExist {
+		proxyHeaders["parsed-token"] = value.(string)
+	}
+
+	content, error := provider.NewHttpProxy("POST", "/handle/login", bytes.NewBuffer(proxyLoginParamsBytes), proxyHeaders).Request(headers)
 
 	if error != nil {
 		lc.HandleFailResponse(c, error)

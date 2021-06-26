@@ -1,7 +1,7 @@
 package router
 
 import (
-	"auth-go/controller"
+	"go-gateway/controller"
 	"github.com/gin-gonic/gin"
 )
 
@@ -9,22 +9,22 @@ var loginController controller.LoginController
 
 var loginRoutes []description = []description {
 	description {
-		path: "/unAuth/captcha",
+		path: "/gateway/captcha",
 		method: "GET",
 		handlers: []gin.HandlerFunc { loginController.HandleGenerateCaptcha },
 	},
 	description {
-		path: "/unAuth/login",
+		path: "/gateway/login",
 		method: "POST",
 		handlers: []gin.HandlerFunc { loginController.HandleLogin },
 	},
 	description {
-		path: "/unAuth/parseToken",
+		path: "/gateway/parseToken",
 		method: "POST",
 		handlers: []gin.HandlerFunc { loginController.HandleParseTokenString },
 	},
 	description {
-		path: "/unAuth/signToken",
+		path: "/gateway/signToken",
 		method: "GET",
 		handlers: []gin.HandlerFunc { loginController.HandleSignTokenString },
 	},

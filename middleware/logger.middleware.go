@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"io/ioutil"
 	"encoding/json"
-	"auth-go/cache"
+	"go-gateway/cache"
 	"github.com/gin-gonic/gin"
 )
 

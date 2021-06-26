@@ -1,7 +1,7 @@
 package middleware
 
 import (
-	"auth-go/provider"
+	"go-gateway/provider"
 	"github.com/gin-gonic/gin"
 )
 

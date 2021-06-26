@@ -4,21 +4,22 @@ import (
 	"io"
 	"net/http"
 	"io/ioutil"
-	"auth-go/config"
+	"go-gateway/config"
 )
 
 type HttpProxy struct {
 	Method              string
 	RequestUrl          string
 	Body                io.Reader
+	Headers             map[string]string
 }
 
 type ProxyHeader struct {
 	ContentType     string `header:"Content-Type"`
 }
 
-func NewHttpProxy(method, path string, body io.Reader) HttpProxy {
-	return HttpProxy {method,config.HttpProxyConfig["http"] + path, body }
+func NewHttpProxy(method, path string, body io.Reader, headers map[string]string) HttpProxy {
+	return HttpProxy {method,config.HttpProxyConfig["http"] + path, body, headers }
 }
 
 func GetDefaultHttpClient() *http.Client {
@@ -36,9 +37,11 @@ func (hp HttpProxy) Request(headers ProxyHeader) ([]byte, error) {
 
 	request.Header.Set("content-type", headers.ContentType)
 
-	response, error := GetDefaultHttpClient().Do(request)
+	for key, value := range hp.Headers {
+		request.Header.Set(key, value)
+	}
 
-	// defer response.Body.Close()
+	response, error := GetDefaultHttpClient().Do(request)
 
 	if error != nil {
 		return nil, error

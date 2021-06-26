@@ -2,7 +2,7 @@ package router
 
 import (
 	"fmt"
-	"auth-go/config"
+	"go-gateway/config"
 	"github.com/gin-gonic/gin"
 )
 

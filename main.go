@@ -1,15 +1,15 @@
 package main
 
 import (
-	"auth-go/cache"
-	"auth-go/database"
-	"auth-go/middleware"
-	"auth-go/router"
+	"go-gateway/cache"
+	"go-gateway/router"
+	"go-gateway/database"
+	"go-gateway/middleware"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	gin.SetMode(gin.ReleaseMode)
+	gin.SetMode(gin.DebugMode)
 
 	engine := gin.Default()
 

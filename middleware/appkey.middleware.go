@@ -2,15 +2,15 @@ package middleware
 
 import (
 	"net/http"
-	"auth-go/cache"
-	"auth-go/model"
-	"auth-go/utils"
+	"go-gateway/cache"
+	"go-gateway/model"
+	"go-gateway/utils"
 	"github.com/gin-gonic/gin"
 )
 
 func HandleAppKeyMiddleware(c *gin.Context) {
-	if c.GetHeader("app") == "" {
-		c.AbortWithStatusJSON(http.StatusOK, gin.H { "status": 500, "msg": "auth-server error: app_key isn't exist", "data": nil })
+	if c.GetHeader("app-key") == "" {
+		c.AbortWithStatusJSON(http.StatusOK, gin.H { "status": 500, "msg": "auth-server error: app-key isn't exist", "data": nil })
 		return
 	}
 
@@ -35,11 +35,11 @@ func HandleAppKeyMiddleware(c *gin.Context) {
 	}
 
 	targetAppKey := utils.SliceFind(utils.StringSliceToInterfaces(appKeys), func(item interface{}, index int) bool {
-		return item != nil && item.(string) == c.GetHeader("app")
+		return item != nil && item.(string) == c.GetHeader("app-key")
 	})
 
 	if targetAppKey == nil {
-		c.AbortWithStatusJSON(http.StatusOK, gin.H { "status": 500, "msg": "the header app_key error", "data": nil })
+		c.AbortWithStatusJSON(http.StatusOK, gin.H { "status": 500, "msg": "the header app-key error", "data": nil })
 		return
 	}
 	c.Next()

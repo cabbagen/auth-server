@@ -1,14 +1,15 @@
 package middleware
 
 import (
+	"strings"
 	"net/http"
 	"github.com/gin-gonic/gin"
 )
 
 var defaultCorsOptions map[string]string = map[string]string {
 	"Access-Control-Allow-Origin": "*",
-	"Access-Control-Allow-Headers": "content-type, token, app, x-requested-with, response-type",
-	"Access-Control-Allow-Methods": "GET, POST, DELETE, PUT, OPTIONS",
+	"Access-Control-Allow-Methods": "get, post, delete, put, options",
+	"Access-Control-Allow-Headers": "content-type, token, app-key, x-requested-with",
 }
 
 func HandleCorsMiddleware(c *gin.Context) {
@@ -16,7 +17,7 @@ func HandleCorsMiddleware(c *gin.Context) {
 		c.Header(key, value)
 	}
 
-	if c.Request.Method == "OPTIONS" {
+	if strings.ToUpper(c.Request.Method) == "OPTIONS" {
 		c.String(http.StatusOK, "true")
 		c.AbortWithStatus(http.StatusOK)
 		return

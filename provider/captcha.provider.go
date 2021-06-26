@@ -2,7 +2,7 @@ package provider
 
 import (
 	"time"
-	"auth-go/cache"
+	"go-gateway/cache"
 	"github.com/mojocn/base64Captcha"
 )
 

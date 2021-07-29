@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"go-gateway/provider"
 	"github.com/gin-gonic/gin"
+	"strings"
 )
 
 var whitelist []string = []string {
@@ -15,7 +16,7 @@ var whitelist []string = []string {
 
 func isInWhitelistUrl(url string) bool {
 	for _, value := range whitelist {
-		if value == url {
+		if strings.HasSuffix(url, value) {
 			return true
 		}
 	}
@@ -28,11 +29,11 @@ func HandleTokenMiddleware(c *gin.Context) {
 	}
 
 	if c.GetHeader("token") == "" {
-		c.AbortWithStatusJSON(http.StatusOK, gin.H { "state": 500, "msg": "auth-server error: token isn't exist", "data": nil })
+		c.AbortWithStatusJSON(http.StatusOK, gin.H { "status": 500, "msg": "auth-server error: token isn't exist", "data": nil })
 		return
 	}
 	if tokenString, error := provider.ParseTokenString(c.GetHeader("token")); error != nil {
-		c.AbortWithStatusJSON(http.StatusOK, gin.H { "state": 500, "msg": "token is error", "data": nil })
+		c.AbortWithStatusJSON(http.StatusOK, gin.H { "status": 500, "msg": "token is error", "data": nil })
 		return
 	} else {
 		c.Set("parsed-token", tokenString)

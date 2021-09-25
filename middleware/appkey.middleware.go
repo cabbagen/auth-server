@@ -10,7 +10,7 @@ import (
 
 func HandleAppKeyMiddleware(c *gin.Context) {
 	if c.GetHeader("app-key") == "" {
-		c.AbortWithStatusJSON(http.StatusOK, gin.H { "status": 500, "msg": "auth-server error: app-key isn't exist", "data": nil })
+		c.AbortWithStatusJSON(http.StatusOK, gin.H { "status": 500, "msg": "gateway-server error: app-key isn't exist", "data": nil })
 		return
 	}
 

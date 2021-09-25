@@ -14,7 +14,7 @@ var loginRoutes []description = []description {
 		handlers: []gin.HandlerFunc { loginController.HandleGenerateCaptcha },
 	},
 	description {
-		path: "/gateway/login",
+		path: "/gateway/login/:server",
 		method: "POST",
 		handlers: []gin.HandlerFunc { loginController.HandleLogin },
 	},

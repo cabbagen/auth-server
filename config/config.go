@@ -18,5 +18,6 @@ var DatabaseConfig map[string]string = map[string]string {
 }
 
 var HttpProxyConfig map[string]string = map[string]string {
-	"http": "http://localhost:7001",
+	"decoration": "http://localhost:7001",
+	"user-server": "http://localhost:8080",
 }

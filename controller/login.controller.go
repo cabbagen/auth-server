@@ -35,9 +35,9 @@ type ProxyLoginRequest struct {
 }
 
 type ProxyLoginResponse struct {
-	Status          int             `json:"status"`
+	Code            int             `json:"code"`
 	Data            string          `json:"data"`
-	Msg             string          `json:"msg"`
+	Message         string          `json:"message"`
 }
 func (lc LoginController) HandleLogin(c *gin.Context) {
 	var params LoginParams
@@ -68,7 +68,7 @@ func (lc LoginController) HandleLogin(c *gin.Context) {
 		proxyHeaders["parsed-token"] = value.(string)
 	}
 
-	content, error := provider.NewHttpProxy("POST", "/handle/login", bytes.NewBuffer(proxyLoginParamsBytes), proxyHeaders).Request(headers)
+	content, error := provider.NewHttpProxy("POST", "/" + c.Param("server") + "/handle/login", bytes.NewBuffer(proxyLoginParamsBytes), proxyHeaders).Request(headers)
 
 	if error != nil {
 		lc.HandleFailResponse(c, error)
@@ -82,8 +82,8 @@ func (lc LoginController) HandleLogin(c *gin.Context) {
 		return
 	}
 
-	if proxyLoginResponse.Status != 200 {
-		lc.HandleFailResponse(c, errors.New("remote server handle/login error"))
+	if proxyLoginResponse.Code != 100200 {
+		lc.HandleFailResponse(c, errors.New(proxyLoginResponse.Message))
 		return
 	}
 

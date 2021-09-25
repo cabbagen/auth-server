@@ -29,7 +29,7 @@ func HandleTokenMiddleware(c *gin.Context) {
 	}
 
 	if c.GetHeader("token") == "" {
-		c.AbortWithStatusJSON(http.StatusOK, gin.H { "status": 500, "msg": "auth-server error: token isn't exist", "data": nil })
+		c.AbortWithStatusJSON(http.StatusOK, gin.H { "status": 500, "msg": "gateway-server error: token isn't exist", "data": nil })
 		return
 	}
 	if tokenString, error := provider.ParseTokenString(c.GetHeader("token")); error != nil {

@@ -2,6 +2,7 @@ package provider
 
 import (
 	"io"
+	"strings"
 	"net/http"
 	"io/ioutil"
 	"go-gateway/config"
@@ -19,7 +20,10 @@ type ProxyHeader struct {
 }
 
 func NewHttpProxy(method, path string, body io.Reader, headers map[string]string) HttpProxy {
-	return HttpProxy {method,config.HttpProxyConfig["http"] + path, body, headers }
+	serverName := strings.Split(path, "/")[1]
+	serverPath := strings.Replace(path, "/" + serverName, "", 1)
+
+	return HttpProxy {method,config.HttpProxyConfig[serverName] + serverPath, body, headers }
 }
 
 func GetDefaultHttpClient() *http.Client {
